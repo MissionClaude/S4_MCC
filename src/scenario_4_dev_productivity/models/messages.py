@@ -114,18 +114,12 @@ class AssistantMessage(BaseModel):
     @property
     def tool_calls(self) -> list[ToolCall]:
         """Convenience accessor — all ``ToolUseBlock``s in this turn."""
-        return [
-            block.call
-            for block in self.content
-            if isinstance(block, ToolUseBlock)
-        ]
+        return [block.call for block in self.content if isinstance(block, ToolUseBlock)]
 
     @property
     def text(self) -> str:
         """Convenience accessor — concatenated text blocks."""
-        return "".join(
-            block.text for block in self.content if isinstance(block, TextBlock)
-        )
+        return "".join(block.text for block in self.content if isinstance(block, TextBlock))
 
 
 class ToolResultMessage(BaseModel):
@@ -206,4 +200,3 @@ def message_to_wire(message: UserMessage | AssistantMessage | ToolResultMessage)
     if message.stop_reason is not None:
         wire["stop_reason"] = message.stop_reason.value
     return wire
-

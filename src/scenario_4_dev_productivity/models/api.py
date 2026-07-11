@@ -157,7 +157,9 @@ class APIError(Exception):
 class RateLimitError(APIError):
     """HTTP 429 — too many requests. Always retryable with backoff."""
 
-    def __init__(self, message: str = "Rate limit exceeded", retry_after: float | None = None) -> None:
+    def __init__(
+        self, message: str = "Rate limit exceeded", retry_after: float | None = None
+    ) -> None:
         super().__init__(message, category=ErrorCategory.RATE_LIMIT, retry_after=retry_after)
 
 

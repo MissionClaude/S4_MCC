@@ -76,9 +76,7 @@ class TestAssistantMessage:
         assert msg.tool_calls[0].name == "Read"
 
     def test_text_concatenates_in_order(self) -> None:
-        msg = AssistantMessage(
-            content=[TextBlock(text="hello "), TextBlock(text="world")]
-        )
+        msg = AssistantMessage(content=[TextBlock(text="hello "), TextBlock(text="world")])
         assert msg.text == "hello world"
 
     def test_tool_calls_empty_when_only_text(self) -> None:
@@ -97,9 +95,10 @@ class TestAssistantMessage:
 class TestToolResultMessage:
     def test_to_user_message_preserves_results(self) -> None:
         original = ToolResultMessage(
-            results=[ToolResult.success("t1", "ok"), ToolResult.failure(
-                "t2", "boom", category="transient", retryable=True
-            )]
+            results=[
+                ToolResult.success("t1", "ok"),
+                ToolResult.failure("t2", "boom", category="transient", retryable=True),
+            ]
         )
         user = original.to_user_message()
         assert user.role == "user"
