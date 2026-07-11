@@ -22,8 +22,13 @@ class Config:
     # Anthropic API
     anthropic_api_key: str = os.getenv("ANTHROPIC_API_KEY", "")
 
-    # Model
-    claude_model: str = os.getenv("CLAUDE_MODEL", "claude-haiku")
+    # Model selection — per-agent tier
+    # lean: fast/cheap (Explore, Automate)  |  balanced: quality/cost (Generate)
+    # full: max reasoning (Coordinator)
+    coordinator_model: str = os.getenv("COORDINATOR_MODEL", "claude-sonnet")
+    explore_model: str = os.getenv("EXPLORE_MODEL", "claude-haiku")
+    generate_model: str = os.getenv("GENERATE_MODEL", "claude-sonnet")
+    automate_model: str = os.getenv("AUTOMATE_MODEL", "claude-haiku")
 
     # Rate limiting
     anthropic_max_rpm: int = int(os.getenv("ANTHROPIC_MAX_RPM", "50"))
