@@ -25,10 +25,10 @@ class Config:
     # Model selection — per-agent tier
     # lean: fast/cheap (Explore, Automate)  |  balanced: quality/cost (Generate)
     # full: max reasoning (Coordinator)
-    coordinator_model: str = os.getenv("COORDINATOR_MODEL", "claude-sonnet")
-    explore_model: str = os.getenv("EXPLORE_MODEL", "claude-haiku")
-    generate_model: str = os.getenv("GENERATE_MODEL", "claude-sonnet")
-    automate_model: str = os.getenv("AUTOMATE_MODEL", "claude-haiku")
+    coordinator_model: str = os.getenv("COORDINATOR_MODEL", "claude-sonnet-5")
+    explore_model: str = os.getenv("EXPLORE_MODEL", "claude-haiku-4-5")
+    generate_model: str = os.getenv("GENERATE_MODEL", "claude-sonnet-5")
+    automate_model: str = os.getenv("AUTOMATE_MODEL", "claude-haiku-4-5")
 
     # Rate limiting
     anthropic_max_rpm: int = int(os.getenv("ANTHROPIC_MAX_RPM", "50"))

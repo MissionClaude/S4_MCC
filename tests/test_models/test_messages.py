@@ -141,13 +141,13 @@ class TestMessageToWire:
             ],
             stop_reason=StopReason.TOOL_USE,
         )
+        # stop_reason is API OUTPUT — never serialised back as input
         assert message_to_wire(msg) == {
             "role": "assistant",
             "content": [
                 {"type": "text", "text": "Reading..."},
                 {"type": "tool_use", "id": "t1", "name": "Read", "input": {"path": "x"}},
             ],
-            "stop_reason": "tool_use",
         }
 
     def test_assistant_without_stop_reason_omits_field(self) -> None:

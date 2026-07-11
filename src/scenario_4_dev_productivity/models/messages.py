@@ -196,7 +196,5 @@ def message_to_wire(message: UserMessage | AssistantMessage | ToolResultMessage)
                     "input": block.call.input,
                 }
             )
-    wire: dict[str, Any] = {"role": "assistant", "content": content}
-    if message.stop_reason is not None:
-        wire["stop_reason"] = message.stop_reason.value
-    return wire
+    # stop_reason is OUTPUT from the API — never send it back as input
+    return {"role": "assistant", "content": content}

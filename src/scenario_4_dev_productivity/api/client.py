@@ -247,7 +247,8 @@ def _user_message_to_wire(message: UserMessage) -> dict[str, Any]:
 
 
 def _assistant_message_to_wire(message: AssistantMessage) -> dict[str, Any]:
-    wire: dict[str, Any] = {
+    # stop_reason is OUTPUT from the API — never send it back as input
+    return {
         "role": "assistant",
         "content": [
             {
@@ -261,9 +262,6 @@ def _assistant_message_to_wire(message: AssistantMessage) -> dict[str, Any]:
             for block in message.content
         ],
     }
-    if message.stop_reason is not None:
-        wire["stop_reason"] = message.stop_reason.value
-    return wire
 
 
 def _parse_stop_reason(raw: Any) -> StopReason | None:
