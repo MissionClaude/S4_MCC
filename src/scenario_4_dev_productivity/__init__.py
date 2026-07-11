@@ -1,10 +1,9 @@
 """Developer Productivity Agent — Scenario 4: Claude Certified Architect.
 
-Public API surface. Phases 1–2 expose the data models, the agent
-prompt templates, and the core infrastructure (tools, API client,
-agentic loop, agent base) that later phases (concrete agents, MCP,
-pipeline, context management, tests, docs) will compose into a
-working agentic loop.
+Public API surface. Phases 1–3 expose the data models, the agent
+prompt templates, the core infrastructure (tools, API client, agentic
+loop, agent base), the four concrete agents (Coordinator, Explore,
+Generate, Automate), and the MCP integration (loader, discovery).
 
 Usage::
 
@@ -12,7 +11,15 @@ Usage::
         AgentConfig,
         AgenticLoop,
         AnthropicClient,
+        AutomateAgent,
         COORDINATOR_SYSTEM_PROMPT,
+        CoordinatorAgent,
+        ExploreAgent,
+        GenerateAgent,
+        MCPConfig,
+        MCPConfigLoader,
+        MCPToolDiscovery,
+        TaskTool,
         ToolDefinition,
         ToolRegistry,
         ToolResult,
@@ -21,9 +28,26 @@ Usage::
 
 from __future__ import annotations
 
-from scenario_4_dev_productivity.agents import BaseAgent, build_agent
+from scenario_4_dev_productivity.agents import (
+    SUBAGENT_TYPES,
+    AutomateAgent,
+    BaseAgent,
+    CoordinatorAgent,
+    ExploreAgent,
+    GenerateAgent,
+    TaskTool,
+    build_agent,
+)
 from scenario_4_dev_productivity.api import AnthropicClient
 from scenario_4_dev_productivity.loop import AgenticLoop, MaxTurnsExceeded
+from scenario_4_dev_productivity.mcp import (
+    MCPConfig,
+    MCPConfigLoader,
+    MCPServerConfig,
+    MCPToolAdapter,
+    MCPToolDiscovery,
+    MCPToolSpec,
+)
 from scenario_4_dev_productivity.models import (
     AgentConfig,
     APIError,
@@ -62,12 +86,18 @@ from scenario_4_dev_productivity.tools import (
     default_registry,
 )
 
-__version__ = "0.2.0"
+__version__ = "0.3.0"
 
 __all__ = [
     "__version__",
     # agents
+    "AutomateAgent",
     "BaseAgent",
+    "CoordinatorAgent",
+    "ExploreAgent",
+    "GenerateAgent",
+    "SUBAGENT_TYPES",
+    "TaskTool",
     "build_agent",
     # loop
     "AgenticLoop",
@@ -80,6 +110,13 @@ __all__ = [
     "AuthError",
     "ErrorCategory",
     "RateLimitError",
+    # mcp
+    "MCPConfig",
+    "MCPConfigLoader",
+    "MCPServerConfig",
+    "MCPToolAdapter",
+    "MCPToolDiscovery",
+    "MCPToolSpec",
     # models — agents / config
     "AgentConfig",
     # models — messages

@@ -1,0 +1,49 @@
+{
+  "mcpServers": {
+    "github": {
+      "command": "npx",
+      "args": ["-y", "@anthropic/mcp-github"],
+      "env": {
+        "GITHUB_TOKEN": "${GITHUB_TOKEN}"
+      },
+      "tools": [
+        {
+          "name": "create_issue",
+          "description": "Create a new GitHub issue in a repository. Use this when the user asks to file a bug, request a feature, or open a ticket on a GitHub repo. Returns the issue URL and number.",
+          "inputSchema": {
+            "type": "object",
+            "properties": {
+              "owner": {"type": "string", "description": "Repository owner (user or org)"},
+              "repo": {"type": "string", "description": "Repository name"},
+              "title": {"type": "string", "description": "Issue title"},
+              "body": {"type": "string", "description": "Issue body in Markdown"},
+              "labels": {
+                "type": "array",
+                "items": {"type": "string"},
+                "description": "Optional list of label names to apply"
+              }
+            },
+            "required": ["owner", "repo", "title"]
+          }
+        },
+        {
+          "name": "list_pull_requests",
+          "description": "List open or recent pull requests on a repository. Use this to summarise PR status, find stale reviews, or answer 'what's open right now?' style questions.",
+          "inputSchema": {
+            "type": "object",
+            "properties": {
+              "owner": {"type": "string", "description": "Repository owner"},
+              "repo": {"type": "string", "description": "Repository name"},
+              "state": {
+                "type": "string",
+                "enum": ["open", "closed", "all"],
+                "description": "Filter by PR state. Defaults to 'open'."
+              }
+            },
+            "required": ["owner", "repo"]
+          }
+        }
+      ]
+    }
+  }
+}
