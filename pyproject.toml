@@ -3,7 +3,9 @@ name = "scenario-4-dev-productivity"
 version = "0.1.0"
 description = "Developer Productivity Agent with Claude Agent SDK — Scenario 4 implementation"
 requires-python = ">=3.13"
-dependencies = []
+dependencies = [
+    "python-dotenv>=1.2.2",
+]
 
 [dependency-groups]
 dev = [
