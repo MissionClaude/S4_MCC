@@ -1,9 +1,10 @@
 """Developer Productivity Agent — Scenario 4: Claude Certified Architect.
 
-Public API surface. Phases 1–3 expose the data models, the agent
+Public API surface. Phases 1–4 expose the data models, the agent
 prompt templates, the core infrastructure (tools, API client, agentic
 loop, agent base), the four concrete agents (Coordinator, Explore,
-Generate, Automate), and the MCP integration (loader, discovery).
+Generate, Automate), the MCP integration (loader, discovery), and
+the pipeline + context management primitives.
 
 Usage::
 
@@ -12,6 +13,7 @@ Usage::
         AgenticLoop,
         AnthropicClient,
         AutomateAgent,
+        ContextCompactor,
         COORDINATOR_SYSTEM_PROMPT,
         CoordinatorAgent,
         ExploreAgent,
@@ -19,6 +21,8 @@ Usage::
         MCPConfig,
         MCPConfigLoader,
         MCPToolDiscovery,
+        PipelineRunner,
+        ScratchpadManager,
         TaskTool,
         ToolDefinition,
         ToolRegistry,
@@ -39,6 +43,17 @@ from scenario_4_dev_productivity.agents import (
     build_agent,
 )
 from scenario_4_dev_productivity.api import AnthropicClient
+from scenario_4_dev_productivity.context import (
+    ContextCompactor,
+    LoggingHook,
+    PostToolUseHook,
+    ScratchpadEntry,
+    ScratchpadManager,
+    TrimReadOutputHook,
+    compact_messages,
+    run_hooks,
+    summarise_tool_result,
+)
 from scenario_4_dev_productivity.loop import AgenticLoop, MaxTurnsExceeded
 from scenario_4_dev_productivity.mcp import (
     MCPConfig,
@@ -68,6 +83,16 @@ from scenario_4_dev_productivity.models import (
     ToolUseBlock,
     UserMessage,
 )
+from scenario_4_dev_productivity.pipeline import (
+    JSONOutputFormat,
+    MultiPassResult,
+    OutputFormat,
+    PassResult,
+    PipelineResult,
+    PipelineRunner,
+    TextOutputFormat,
+    run_multi_pass,
+)
 from scenario_4_dev_productivity.prompts import (
     AUTOMATE_SYSTEM_PROMPT,
     COORDINATOR_SYSTEM_PROMPT,
@@ -86,7 +111,7 @@ from scenario_4_dev_productivity.tools import (
     default_registry,
 )
 
-__version__ = "0.3.0"
+__version__ = "0.4.0"
 
 __all__ = [
     "__version__",
@@ -110,6 +135,16 @@ __all__ = [
     "AuthError",
     "ErrorCategory",
     "RateLimitError",
+    # context
+    "ContextCompactor",
+    "LoggingHook",
+    "PostToolUseHook",
+    "ScratchpadEntry",
+    "ScratchpadManager",
+    "TrimReadOutputHook",
+    "compact_messages",
+    "run_hooks",
+    "summarise_tool_result",
     # mcp
     "MCPConfig",
     "MCPConfigLoader",
@@ -132,6 +167,15 @@ __all__ = [
     "ToolDefinition",
     "ToolParameterSchema",
     "ToolResult",
+    # pipeline
+    "JSONOutputFormat",
+    "MultiPassResult",
+    "OutputFormat",
+    "PassResult",
+    "PipelineResult",
+    "PipelineRunner",
+    "TextOutputFormat",
+    "run_multi_pass",
     # prompts
     "AUTOMATE_SYSTEM_PROMPT",
     "COORDINATOR_SYSTEM_PROMPT",

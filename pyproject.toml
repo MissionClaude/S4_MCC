@@ -9,6 +9,16 @@ dependencies = [
     "python-dotenv>=1.2.2",
 ]
 
+[project.scripts]
+scenario-4 = "scenario_4_dev_productivity.pipeline.cli:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/scenario_4_dev_productivity"]
+
 [dependency-groups]
 dev = [
     "mypy>=2.2.0",
